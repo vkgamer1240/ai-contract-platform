@@ -1,0 +1,88 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.env
+
+# PyTorch models (too large for GitHub)
+*.bin
+*.pt
+*.pth
+pytorch_model.bin
+training_args.bin
+
+# Large model files
+vocab.json
+tokenizer_config.json
+special_tokens_map.json
+
+# Predictions and outputs
+predictions_*.json
+nbest_predictions_*.json
+null_odds_*.json
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Temporary files
+*.tmp
+*.temp
+merges.txt
+
+# Large PDF files
+*.pdf
+
+# Screenshots
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# pytest
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json

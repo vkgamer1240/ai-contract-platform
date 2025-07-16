@@ -1,0 +1,62 @@
+{
+  "governing_law": {
+    "answer": "This Agreement shall be governed by the laws of California.",
+    "confidence": 0.9576655626296997,
+    "start_position": 35,
+    "end_position": 45
+  },
+  "termination": {
+    "answer": "No answer found",
+    "confidence": 0.49791982769966125,
+    "start_position": 0,
+    "end_position": 0
+  },
+  "liability": {
+    "answer": "No answer found",
+    "confidence": 0.7220540046691895,
+    "start_position": 0,
+    "end_position": 0
+  },
+  "payment_terms": {
+    "answer": "No answer found",
+    "confidence": 0.9246362447738647,
+    "start_position": 0,
+    "end_position": 0
+  },
+  "intellectual_property": {
+    "answer": "This Agreement shall be governed by the laws of California.",
+    "confidence": 0.5271993279457092,
+    "start_position": 34,
+    "end_position": 44
+  },
+  "confidentiality": {
+    "answer": "No answer found",
+    "confidence": 0.4634924829006195,
+    "start_position": 0,
+    "end_position": 0
+  },
+  "force_majeure": {
+    "answer": "No answer found",
+    "confidence": 0.3703513741493225,
+    "start_position": 0,
+    "end_position": 0
+  },
+  "warranty": {
+    "answer": "No answer found",
+    "confidence": 0.5561070442199707,
+    "start_position": 0,
+    "end_position": 0
+  },
+  "dispute_resolution": {
+    "answer": "This Agreement shall be governed by the laws of California.",
+    "confidence": 0.3050103485584259,
+    "start_position": 36,
+    "end_position": 46
+  },
+  "renewal": {
+    "answer": "No answer found",
+    "confidence": 0.9042081236839294,
+    "start_position": 0,
+    "end_position": 0
+  }
+}

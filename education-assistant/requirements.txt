@@ -1,0 +1,6 @@
+wikipedia
+faiss-cpu
+sentence-transformers
+requests
+groq
+python-dotenv

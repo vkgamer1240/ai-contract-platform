@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced CUAD Contract Analyzer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .feature-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #ecf0f1;
+            margin-bottom: 30px;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #7f8c8d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+        
+        .tab:hover {
+            color: #3498db;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+        }
+        
+        .input-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .input-section h3 {
+            color: #2c3e50;
+            font-size: 1.3em;
+        }
+        
+        .contract-type-indicator {
+            background: #3498db;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 250px;
+            padding: 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .sample-selector {
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #e1e8ed;
+            font-size: 14px;
+            min-width: 200px;
+        }
+        
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        button {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+        
+        .btn-risk {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .btn-app {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+        }
+        
+        .btn-groq {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .results {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .risk-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .risk-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #bdc3c7;
+        }
+        
+        .risk-card.high {
+            border-left-color: #e74c3c;
+        }
+        
+        .risk-card.medium {
+            border-left-color: #f39c12;
+        }
+        
+        .risk-card.low {
+            border-left-color: #27ae60;
+        }
+        
+        .risk-score {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .risk-label {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .result-section {
+            background: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .result-section h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .cuad-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .cuad-item {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .cuad-item h5 {
+            color: #34495e;
+            margin-bottom: 8px;
+            text-transform: capitalize;
+        }
+        
+        .cuad-answer {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .confidence {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        
+        .confidence.high {
+            color: #27ae60;
+        }
+        
+        .confidence.medium {
+            color: #f39c12;
+        }
+        
+        .confidence.low {
+            color: #e74c3c;
+        }
+        
+        .confidence-bar {
+            width: 100%;
+            height: 4px;
+            background: #ecf0f1;
+            border-radius: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e74c3c, #f39c12, #27ae60);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        .groq-analysis {
+            background: #fff9e6;
+            border: 1px solid #f39c12;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        
+        .groq-analysis h4 {
+            color: #e67e22;
+            margin-bottom: 15px;
+        }
+        
+        .groq-content {
+            white-space: pre-wrap;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        
+        .recommendations {
+            background: #e8f5e8;
+            border: 1px solid #27ae60;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .recommendations h4 {
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+        
+        .recommendations ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .recommendations li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .recommendations li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .risk-items {
+            margin-top: 15px;
+        }
+        
+        .risk-item {
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .risk-item.high {
+            background: #fadbd8;
+            color: #c0392b;
+            border-left: 3px solid #e74c3c;
+        }
+        
+        .risk-item.medium {
+            background: #fdeaa7;
+            color: #d68910;
+            border-left: 3px solid #f39c12;
+        }
+        
+        .risk-item.red-flag {
+            background: #f1948a;
+            color: #922b21;
+            border-left: 3px solid #cb4335;
+            font-weight: bold;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+        
+        .spinner {
+            border: 4px solid #ecf0f1;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .contract-type-info {
+            background: #e8f4fd;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .contract-type-info h4 {
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 Enhanced CUAD Contract Analyzer</h1>
+            <p>Advanced AI-powered contract analysis with Groq API integration and comprehensive risk assessment</p>
+            <div class="feature-badges">
+                <span class="badge">🤖 CUAD Model</span>
+                <span class="badge">⚡ Groq API</span>
+                <span class="badge">🛡️ Risk Assessment</span>
+                <span class="badge">📱 App Agreements</span>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('comprehensive')">🔍 Comprehensive Analysis</button>
+                <button class="tab" onclick="showTab('risk')">⚠️ Risk Assessment</button>
+                <button class="tab" onclick="showTab('app')">📱 App/Software Focus</button>
+            </div>
+            
+            <div id="comprehensive" class="tab-content active">
+                <div class="input-section">
+                    <div class="input-header">
+                        <h3>📄 Contract Text</h3>
+                        <select id="sampleSelector" class="sample-selector" onchange="loadSampleContract()">
+                            <option value="">Load Enhanced Sample...</option>
+                            <option value="app_terms">📱 Mobile App Terms</option>
+                            <option value="software_saas">💻 SaaS Agreement</option>
+                            <option value="mobile_game">🎮 Mobile Game Terms</option>
+                            <option value="employment_tech">👨‍💻 Tech Employment</option>
+                        </select>
+                    </div>
+                    <textarea id="contractText" placeholder="Paste your contract text here or select a sample above..."></textarea>
+                    <div id="contractTypeInfo" class="contract-type-info" style="display:none;">
+                        <h4>Contract Type Detected</h4>
+                        <p id="contractTypeDescription"></p>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn-primary" onclick="analyzeComprehensive()">
+                        🔍 Full Analysis (CUAD + Groq)
+                    </button>
+                    <button class="btn-risk" onclick="analyzeRisks()">
+                        ⚠️ Risk Assessment
+                    </button>
+                    <button class="btn-app" onclick="analyzeAppSpecific()">
+                        📱 App/Software Analysis
+                    </button>
+                    <button class="btn-groq" onclick="detectContractType()">
+                        🤖 Detect Contract Type
+                    </button>
+                </div>
+            </div>
+            
+            <div id="risk" class="tab-content">
+                <h3>⚠️ Risk-Focused Analysis</h3>
+                <p>This analysis focuses specifically on identifying legal and business risks in your contract.</p>
+                <div class="button-group">
+                    <button class="btn-risk" onclick="analyzeRisks()">
+                        ⚠️ Analyze Risks
+                    </button>
+                </div>
+            </div>
+            
+            <div id="app" class="tab-content">
+                <h3>📱 App & Software Agreement Analysis</h3>
+                <p>Specialized analysis for mobile apps, SaaS, and software agreements focusing on data privacy, permissions, and user rights.</p>
+                <div class="button-group">
+                    <button class="btn-app" onclick="analyzeAppSpecific()">
+                        📱 App Analysis
+                    </button>
+                </div>
+            </div>
+            
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <script>
+        let sampleContracts = {};
+        
+        // Load enhanced sample contracts
+        fetch('/get_enhanced_samples')
+            .then(response => response.json())
+            .then(data => {
+                sampleContracts = data;
+            })
+            .catch(error => console.error('Error loading samples:', error));
+        
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+        
+        function loadSampleContract() {
+            const selector = document.getElementById('sampleSelector');
+            const contractText = document.getElementById('contractText');
+            
+            if (selector.value && sampleContracts[selector.value]) {
+                contractText.value = sampleContracts[selector.value];
+                contractText.style.height = 'auto';
+                contractText.style.height = Math.min(contractText.scrollHeight, 400) + 'px';
+                
+                // Auto-detect contract type
+                detectContractType();
+            }
+        }
+        
+        async function analyzeComprehensive() {
+            const contractText = document.getElementById('contractText').value.trim();
+            
+            if (!contractText) {
+                showError('Please provide contract text.');
+                return;
+            }
+            
+            showLoading('Performing comprehensive analysis with CUAD model and Groq API...');
+            
+            try {
+                const response = await fetch('/analyze_comprehensive', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contract_text: contractText })
+                });
+                
+                const results = await response.json();
+                
+                if (response.ok) {
+                    showComprehensiveResults(results);
+                } else {
+                    showError(results.error || 'Analysis failed');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            }
+        }
+        
+        async function analyzeRisks() {
+            const contractText = document.getElementById('contractText').value.trim();
+            
+            if (!contractText) {
+                showError('Please provide contract text.');
+                return;
+            }
+            
+            showLoading('Analyzing contract risks...');
+            
+            try {
+                const response = await fetch('/analyze_risks', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contract_text: contractText })
+                });
+                
+                const results = await response.json();
+                
+                if (response.ok) {
+                    showRiskResults(results);
+                } else {
+                    showError(results.error || 'Risk analysis failed');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            }
+        }
+        
+        async function analyzeAppSpecific() {
+            const contractText = document.getElementById('contractText').value.trim();
+            
+            if (!contractText) {
+                showError('Please provide contract text.');
+                return;
+            }
+            
+            showLoading('Analyzing app/software specific terms...');
+            
+            try {
+                const response = await fetch('/analyze_app_specific', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contract_text: contractText })
+                });
+                
+                const results = await response.json();
+                
+                if (response.ok) {
+                    showAppResults(results);
+                } else {
+                    showError(results.error || 'App analysis failed');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            }
+        }
+        
+        async function detectContractType() {
+            const contractText = document.getElementById('contractText').value.trim();
+            
+            if (!contractText) {
+                showError('Please provide contract text.');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/detect_contract_type', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contract_text: contractText })
+                });
+                
+                const results = await response.json();
+                
+                if (response.ok) {
+                    showContractTypeInfo(results);
+                } else {
+                    showError(results.error || 'Type detection failed');
+                }
+            } catch (error) {
+                showError('Network error: ' + error.message);
+            }
+        }
+        
+        function showComprehensiveResults(results) {
+            const riskLevel = results.risk_assessment.overall_risk;
+            const riskScore = results.risk_assessment.risk_score;
+            
+            let html = `
+                <div class="results">
+                    <div class="risk-summary">
+                        <div class="risk-card ${riskLevel.toLowerCase()}">
+                            <div class="risk-score">${riskScore}</div>
+                            <div class="risk-label">Risk Score</div>
+                        </div>
+                        <div class="risk-card">
+                            <div class="risk-score">${results.contract_type.replace('_', ' ').toUpperCase()}</div>
+                            <div class="risk-label">Contract Type</div>
+                        </div>
+                        <div class="risk-card ${riskLevel.toLowerCase()}">
+                            <div class="risk-score">${riskLevel}</div>
+                            <div class="risk-label">Risk Level</div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-section">
+                        <h4>🤖 CUAD Model Analysis</h4>
+                        <div class="cuad-results">
+            `;
+            
+            for (const [category, result] of Object.entries(results.cuad_analysis)) {
+                const confidence = Math.round(result.confidence * 100);
+                const confidenceClass = confidence >= 70 ? 'high' : confidence >= 50 ? 'medium' : 'low';
+                
+                html += `
+                    <div class="cuad-item">
+                        <h5>${category.replace('_', ' ')}</h5>
+                        <div class="cuad-answer">${result.answer}</div>
+                        <div class="confidence ${confidenceClass}">
+                            Confidence: ${confidence}%
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: ${confidence}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            html += `</div></div>`;
+            
+            // Add Groq analysis if available
+            if (results.groq_analysis && results.groq_analysis.analysis) {
+                html += `
+                    <div class="groq-analysis">
+                        <h4>⚡ Groq AI Analysis</h4>
+                        <div class="groq-content">${results.groq_analysis.analysis}</div>
+                    </div>
+                `;
+            }
+            
+            // Add risk details
+            html += showRiskDetails(results.risk_assessment);
+            
+            // Add recommendations
+            if (results.recommendations && results.recommendations.length > 0) {
+                html += `
+                    <div class="recommendations">
+                        <h4>💡 Recommendations</h4>
+                        <ul>
+                `;
+                
+                results.recommendations.forEach(rec => {
+                    html += `<li>${rec}</li>`;
+                });
+                
+                html += `</ul></div>`;
+            }
+            
+            html += `</div>`;
+            document.getElementById('results').innerHTML = html;
+        }
+        
+        function showRiskResults(results) {
+            let html = `
+                <div class="results">
+                    <div class="risk-summary">
+                        <div class="risk-card ${results.risk_assessment.overall_risk.toLowerCase()}">
+                            <div class="risk-score">${results.risk_assessment.risk_score}</div>
+                            <div class="risk-label">Risk Score</div>
+                        </div>
+                        <div class="risk-card">
+                            <div class="risk-score">${results.risk_assessment.high_risk.length}</div>
+                            <div class="risk-label">High Risks</div>
+                        </div>
+                        <div class="risk-card">
+                            <div class="risk-score">${results.risk_assessment.red_flags.length}</div>
+                            <div class="risk-label">Red Flags</div>
+                        </div>
+                    </div>
+            `;
+            
+            html += showRiskDetails(results.risk_assessment);
+            
+            if (results.groq_analysis && results.groq_analysis.analysis) {
+                html += `
+                    <div class="groq-analysis">
+                        <h4>⚡ Groq Risk Analysis</h4>
+                        <div class="groq-content">${results.groq_analysis.analysis}</div>
+                    </div>
+                `;
+            }
+            
+            html += `</div>`;
+            document.getElementById('results').innerHTML = html;
+        }
+        
+        function showAppResults(results) {
+            let html = `
+                <div class="results">
+                    <div class="result-section">
+                        <h4>📱 App/Software Specific Analysis</h4>
+                        <div class="cuad-results">
+            `;
+            
+            for (const [category, result] of Object.entries(results.cuad_analysis)) {
+                const confidence = Math.round(result.confidence * 100);
+                const confidenceClass = confidence >= 70 ? 'high' : confidence >= 50 ? 'medium' : 'low';
+                
+                html += `
+                    <div class="cuad-item">
+                        <h5>${category.replace('_', ' ')}</h5>
+                        <div class="cuad-answer">${result.answer}</div>
+                        <div class="confidence ${confidenceClass}">
+                            Confidence: ${confidence}%
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: ${confidence}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            html += `</div></div>`;
+            
+            if (results.groq_analysis && results.groq_analysis.analysis) {
+                html += `
+                    <div class="groq-analysis">
+                        <h4>⚡ Groq App Analysis</h4>
+                        <div class="groq-content">${results.groq_analysis.analysis}</div>
+                    </div>
+                `;
+            }
+            
+            html += showRiskDetails(results.risk_assessment);
+            html += `</div>`;
+            
+            document.getElementById('results').innerHTML = html;
+        }
+        
+        function showRiskDetails(riskAssessment) {
+            let html = `<div class="result-section"><h4>⚠️ Risk Assessment Details</h4>`;
+            
+            if (riskAssessment.high_risk.length > 0) {
+                html += `<div class="risk-items">`;
+                riskAssessment.high_risk.forEach(risk => {
+                    html += `<div class="risk-item high">🔴 ${risk}</div>`;
+                });
+                html += `</div>`;
+            }
+            
+            if (riskAssessment.medium_risk.length > 0) {
+                html += `<div class="risk-items">`;
+                riskAssessment.medium_risk.forEach(risk => {
+                    html += `<div class="risk-item medium">🟡 ${risk}</div>`;
+                });
+                html += `</div>`;
+            }
+            
+            if (riskAssessment.red_flags.length > 0) {
+                html += `<div class="risk-items">`;
+                riskAssessment.red_flags.forEach(flag => {
+                    html += `<div class="risk-item red-flag">🚩 ${flag}</div>`;
+                });
+                html += `</div>`;
+            }
+            
+            html += `</div>`;
+            return html;
+        }
+        
+        function showContractTypeInfo(results) {
+            const info = document.getElementById('contractTypeInfo');
+            const description = document.getElementById('contractTypeDescription');
+            
+            const typeDescriptions = {
+                'app_agreement': '📱 Mobile App/Software Agreement - Focuses on data privacy, permissions, and user rights',
+                'employment': '👨‍💻 Employment Agreement - Covers compensation, IP rights, and confidentiality',
+                'vendor_supply': '📦 Vendor/Supply Agreement - Deals with procurement, quality, and delivery terms',
+                'service_agreement': '🤝 Service Agreement - Professional services and consulting terms',
+                'general_contract': '📄 General Contract - Standard business agreement'
+            };
+            
+            description.textContent = typeDescriptions[results.contract_type] || 'Unknown contract type';
+            info.style.display = 'block';
+        }
+        
+        function showLoading(message) {
+            document.getElementById('results').innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+        
+        function showError(message) {
+            document.getElementById('results').innerHTML = `
+                <div class="error">
+                    <strong>Error:</strong> ${message}
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Dynamic AI Contract Creation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #fff, #f0f8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .creation-wizard {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.3);
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .wizard-steps {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 30px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid #dee2e6;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .step.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .step.completed {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border-color: #28a745;
+        }
+
+        .step-number {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            width: 33%;
+        }
+
+        .form-section {
+            display: none;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dynamic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .floating-label {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: white;
+            padding: 0 8px;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            font-weight: 500;
+        }
+
+        .floating-label.active {
+            top: -8px;
+            font-size: 0.85rem;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .modern-input, .modern-textarea, .modern-select {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 12px;
+            font-size: 16px;
+            background: white;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .modern-input:focus, .modern-textarea:focus, .modern-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .modern-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .voice-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .voice-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .voice-btn.listening {
+            background: linear-gradient(135deg, #dc3545, #e74c3c);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.1); }
+            100% { transform: translateY(-50%) scale(1); }
+        }
+
+        .smart-suggestions {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .chip {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .chip:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, #5a6268, #343a40);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .contract-preview {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            margin-top: 30px;
+            display: none;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+        }
+
+        .loading-animation {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-dots {
+            display: inline-flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #667eea;
+            animation: loadingDots 1.4s infinite ease-in-out;
+        }
+
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes loadingDots {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            padding: 12px 24px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .wizard-steps {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .dynamic-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .creation-wizard {
+                padding: 25px;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-button">← Back to Home</a>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Dynamic Contract Creation</h1>
+            <p>Create professional contracts with AI assistance and voice input</p>
+        </div>
+
+        <div class="creation-wizard">
+            <!-- Progress Bar -->
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <!-- Wizard Steps -->
+            <div class="wizard-steps">
+                <div class="step active" id="step1" onclick="goToStep(1)">
+                    <div class="step-number">1</div>
+                    <span>Company Details</span>
+                </div>
+                <div class="step" id="step2" onclick="goToStep(2)">
+                    <div class="step-number">2</div>
+                    <span>Contract Terms</span>
+                </div>
+                <div class="step" id="step3" onclick="goToStep(3)">
+                    <div class="step-number">3</div>
+                    <span>Review & Generate</span>
+                </div>
+            </div>
+
+            <form id="dynamicContractForm" onsubmit="return false;">
+                <!-- Step 1: Company Details -->
+                <div class="form-section active" id="section1">
+                    <h2 style="margin-bottom: 30px; color: #667eea;">👥 Company Information</h2>
+                    
+                    <div class="dynamic-grid">
+                        <div class="input-group">
+                            <input type="text" id="companyA" name="company_a" class="modern-input" required>
+                            <label class="floating-label">Service Provider Company</label>
+                            <button type="button" class="voice-btn" onclick="startVoiceInput('companyA')">🎤</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <input type="text" id="companyB" name="company_b" class="modern-input" required>
+                            <label class="floating-label">Client Company</label>
+                            <button type="button" class="voice-btn" onclick="startVoiceInput('companyB')">🎤</button>
+                        </div>
+                    </div>
+
+                    <div class="smart-suggestions">
+                        <h4>💡 Quick Company Templates</h4>
+                        <div class="suggestion-chips">
+                            <button type="button" class="chip" onclick="fillCompanyTemplate('tech')">Tech Startup</button>
+                            <button type="button" class="chip" onclick="fillCompanyTemplate('consulting')">Consulting Firm</button>
+                            <button type="button" class="chip" onclick="fillCompanyTemplate('marketing')">Marketing Agency</button>
+                            <button type="button" class="chip" onclick="fillCompanyTemplate('freelance')">Freelancer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Contract Terms -->
+                <div class="form-section" id="section2">
+                    <h2 style="margin-bottom: 30px; color: #667eea;">📋 Contract Terms</h2>
+                    
+                    <div class="dynamic-grid">
+                        <div class="input-group full-width">
+                            <textarea id="services" name="services" class="modern-textarea" required></textarea>
+                            <label class="floating-label">Services Description</label>
+                            <button type="button" class="voice-btn" onclick="startVoiceInput('services')">🎤</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <select id="duration" name="duration" class="modern-select" required>
+                                <option value="">Select Duration</option>
+                                <option value="3 months">3 Months</option>
+                                <option value="6 months">6 Months</option>
+                                <option value="12 months">12 Months</option>
+                                <option value="24 months">24 Months</option>
+                                <option value="ongoing">Ongoing</option>
+                                <option value="project-based">Project-Based</option>
+                            </select>
+                            <label class="floating-label active">Contract Duration</label>
+                        </div>
+                        
+                        <div class="input-group">
+                            <select id="paymentTerms" name="payment_terms" class="modern-select" required>
+                                <option value="">Select Payment Terms</option>
+                                <option value="monthly payments in advance">Monthly in Advance</option>
+                                <option value="monthly payments at month end">Monthly at Month End</option>
+                                <option value="quarterly payments">Quarterly Payments</option>
+                                <option value="milestone-based payments">Milestone-Based</option>
+                                <option value="upon completion">Upon Completion</option>
+                                <option value="50% upfront, 50% upon completion">50% Upfront, 50% Completion</option>
+                            </select>
+                            <label class="floating-label active">Payment Terms</label>
+                        </div>
+                        
+                        <div class="input-group">
+                            <input type="text" id="startDate" name="start_date" class="modern-input" value="upon signing">
+                            <label class="floating-label active">Start Date</label>
+                            <button type="button" class="voice-btn" onclick="startVoiceInput('startDate')">🎤</button>
+                        </div>
+                        
+                        <div class="input-group">
+                            <select id="confidentiality" name="confidentiality_level" class="modern-select" required>
+                                <option value="standard">Standard Confidentiality</option>
+                                <option value="high">High Confidentiality</option>
+                                <option value="mutual">Mutual Confidentiality</option>
+                                <option value="minimal">Minimal Confidentiality</option>
+                            </select>
+                            <label class="floating-label active">Confidentiality Level</label>
+                        </div>
+                    </div>
+
+                    <div class="smart-suggestions">
+                        <h4>💡 Service Templates</h4>
+                        <div class="suggestion-chips">
+                            <button type="button" class="chip" onclick="fillServiceTemplate('web')">Web Development</button>
+                            <button type="button" class="chip" onclick="fillServiceTemplate('mobile')">Mobile App</button>
+                            <button type="button" class="chip" onclick="fillServiceTemplate('design')">Design Services</button>
+                            <button type="button" class="chip" onclick="fillServiceTemplate('marketing')">Digital Marketing</button>
+                            <button type="button" class="chip" onclick="fillServiceTemplate('consulting')">Business Consulting</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Sharing Options -->
+                <div class="form-section" id="section3">
+                    <h2 style="margin-bottom: 30px; color: #667eea;"> Review & Generate</h2>
+                    
+                    <div id="contractSummary" class="smart-suggestions">
+                        <h4>📋 Contract Summary</h4>
+                        <div id="summaryContent">
+                            <!-- Will be filled dynamically -->
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button type="submit" class="btn btn-primary" style="font-size: 18px; padding: 20px 40px;">
+                            🤖 Generate Contract with AI
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="navigation-buttons">
+                <button type="button" class="btn btn-outline" id="prevBtn" onclick="previousStep()" style="display: none;">
+                    ← Previous
+                </button>
+                <div></div>
+                <button type="button" class="btn btn-primary" id="nextBtn" onclick="nextStep()">
+                    Next →
+                </button>
+            </div>
+        </div>
+
+        <!-- Contract Preview -->
+        <div id="contractPreview" class="contract-preview">
+            <div id="loadingState" class="loading-animation" style="display: none;">
+                <div class="loading-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <h3 style="margin-top: 20px; color: #667eea;">Generating Your Contract...</h3>
+                <p style="color: #6c757d; margin-top: 10px;">Using YOUR RoBERTa model + Groq AI</p>
+            </div>
+            
+            <div id="contractResults" style="display: none;">
+                <!-- Contract results will be shown here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let totalSteps = 3;
+        let currentContract = null;
+
+        // Voice Recognition
+        let recognition = null;
+        let isVoiceSupported = false;
+
+        // Initialize voice recognition
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+            isVoiceSupported = true;
+        } else if ('SpeechRecognition' in window) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+            isVoiceSupported = true;
+        }
+
+        // Floating label animation
+        document.querySelectorAll('.modern-input, .modern-textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.nextElementSibling.classList.add('active');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.nextElementSibling.classList.remove('active');
+                }
+            });
+            
+            // Check if already has value
+            if (input.value) {
+                input.nextElementSibling.classList.add('active');
+            }
+        });
+
+        function goToStep(step) {
+            if (step > currentStep && !validateCurrentStep()) {
+                return;
+            }
+            
+            currentStep = step;
+            updateWizard();
+        }
+
+        function nextStep() {
+            console.log(`nextStep called: currentStep=${currentStep}, totalSteps=${totalSteps}`);
+            
+            if (currentStep < totalSteps && validateCurrentStep()) {
+                console.log('Moving to next step');
+                currentStep++;
+                updateWizard();
+            } else if (currentStep === totalSteps) {
+                console.log('Generating contract...');
+                generateContract();
+            } else {
+                console.log('Validation failed or at final step');
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateWizard();
+            }
+        }
+
+        function updateWizard() {
+            // Update progress bar
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            // Update steps
+            for (let i = 1; i <= totalSteps; i++) {
+                const step = document.getElementById(`step${i}`);
+                const section = document.getElementById(`section${i}`);
+                
+                step.classList.remove('active', 'completed');
+                section.classList.remove('active');
+                
+                if (i < currentStep) {
+                    step.classList.add('completed');
+                } else if (i === currentStep) {
+                    step.classList.add('active');
+                    section.classList.add('active');
+                }
+            }
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').style.display = currentStep > 1 ? 'block' : 'none';
+            document.getElementById('nextBtn').textContent = currentStep === totalSteps ? '🤖 Generate Contract' : 'Next →';
+            
+            // Update summary if on step 3
+            if (currentStep === 3) {
+                updateContractSummary();
+            }
+        }
+
+        function validateCurrentStep() {
+            const section = document.getElementById(`section${currentStep}`);
+            const requiredInputs = section.querySelectorAll('[required]');
+            
+            for (let input of requiredInputs) {
+                if (!input.value.trim()) {
+                    input.focus();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function updateContractSummary() {
+            const formData = new FormData(document.getElementById('dynamicContractForm'));
+            const data = Object.fromEntries(formData.entries());
+            
+            const summary = `
+                <p><strong>Service Provider:</strong> ${data.company_a || 'Not specified'}</p>
+                <p><strong>Client:</strong> ${data.company_b || 'Not specified'}</p>
+                <p><strong>Services:</strong> ${data.services || 'Not specified'}</p>
+                <p><strong>Duration:</strong> ${data.duration || 'Not specified'}</p>
+                <p><strong>Payment Terms:</strong> ${data.payment_terms || 'Not specified'}</p>
+                <p><strong>Start Date:</strong> ${data.start_date || 'Not specified'}</p>
+                <p><strong>Confidentiality:</strong> ${data.confidentiality_level || 'Standard'}</p>
+            `;
+            
+            document.getElementById('summaryContent').innerHTML = summary;
+        }
+
+        function startVoiceInput(fieldId) {
+            if (!isVoiceSupported) {
+                alert('Voice recognition is not supported in your browser');
+                return;
+            }
+            
+            const button = event.target;
+            const input = document.getElementById(fieldId);
+            
+            button.classList.add('listening');
+            button.textContent = '🔴';
+            
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                input.value = transcript;
+                input.nextElementSibling.classList.add('active');
+                button.classList.remove('listening');
+                button.textContent = '🎤';
+            };
+            
+            recognition.onerror = function(event) {
+                console.error('Voice recognition error:', event.error);
+                button.classList.remove('listening');
+                button.textContent = '🎤';
+            };
+            
+            recognition.onend = function() {
+                button.classList.remove('listening');
+                button.textContent = '🎤';
+            };
+            
+            recognition.start();
+        }
+
+        function fillCompanyTemplate(type) {
+            const templates = {
+                tech: {
+                    company_a: 'TechInnovate Solutions LLC',
+                    company_b: 'StartupVentures Inc.'
+                },
+                consulting: {
+                    company_a: 'Strategic Consulting Group',
+                    company_b: 'BusinessGrowth Corp.'
+                },
+                marketing: {
+                    company_a: 'Digital Marketing Experts',
+                    company_b: 'RetailBrand Company'
+                },
+                freelance: {
+                    company_a: 'John Doe Freelance Services',
+                    company_b: 'Local Business LLC'
+                }
+            };
+            
+            const template = templates[type];
+            if (template) {
+                document.getElementById('companyA').value = template.company_a;
+                document.getElementById('companyB').value = template.company_b;
+                
+                // Activate floating labels
+                document.querySelector('#companyA + .floating-label').classList.add('active');
+                document.querySelector('#companyB + .floating-label').classList.add('active');
+            }
+        }
+
+        function fillServiceTemplate(type) {
+            const templates = {
+                web: 'Complete web development services including frontend and backend development, responsive design, database integration, and deployment.',
+                mobile: 'Mobile application development for iOS and Android platforms, including UI/UX design, API integration, and app store deployment.',
+                design: 'Comprehensive design services including branding, logo design, marketing materials, and digital asset creation.',
+                marketing: 'Digital marketing services including SEO, social media management, content creation, and advertising campaigns.',
+                consulting: 'Business consulting services including strategy development, process optimization, and performance analysis.'
+            };
+            
+            const template = templates[type];
+            if (template) {
+                document.getElementById('services').value = template;
+                document.querySelector('#services + .floating-label').classList.add('active');
+            }
+        }
+
+        async function generateContract() {
+            console.log('🚀 generateContract() called');
+            
+            // Show loading state
+            document.getElementById('contractPreview').style.display = 'block';
+            document.getElementById('loadingState').style.display = 'block';
+            document.getElementById('contractResults').style.display = 'none';
+            
+            // Scroll to results
+            document.getElementById('contractPreview').scrollIntoView({ behavior: 'smooth' });
+            
+            try {
+                const formData = new FormData(document.getElementById('dynamicContractForm'));
+                const contractParams = Object.fromEntries(formData.entries());
+                
+                console.log('📋 Generating contract with parameters:', contractParams);
+                
+                const response = await fetch('/api/create_contract', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(contractParams)
+                });
+                
+                const data = await response.json();
+                console.log('Contract generation response:', data);
+                
+                if (response.ok && data.success) {
+                    currentContract = data;
+                    displayContractResults(data);
+                } else {
+                    throw new Error(data.error || 'Contract generation failed');
+                }
+                
+            } catch (error) {
+                console.error('Contract generation error:', error);
+                document.getElementById('loadingState').innerHTML = `
+                    <div style="color: #dc3545; text-align: center;">
+                        <h3>❌ Contract Generation Failed</h3>
+                        <p>${error.message}</p>
+                        <button onclick="retryGeneration()" class="btn btn-primary" style="margin-top: 15px;">Try Again</button>
+                    </div>
+                `;
+            }
+        }
+
+        function displayContractResults(data) {
+            // Hide loading, show results
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('contractResults').style.display = 'block';
+            
+            const riskAnalysis = data.risk_analysis || {};
+            const riskData = riskAnalysis.risk_analysis || {};
+            
+            document.getElementById('contractResults').innerHTML = `
+                <h2 style="color: #667eea; margin-bottom: 20px;">📄 Your Generated Contract</h2>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+                    <div style="background: linear-gradient(135deg, #e8f5e8, #d4edda); padding: 20px; border-radius: 12px;">
+                        <h4 style="color: #155724;">🤖 Generation Details</h4>
+                        <p><strong>AI Model:</strong> ${data.generation_engine}</p>
+                        <p><strong>Analysis Engine:</strong> ${data.analysis_engine}</p>
+                        <p><strong>Word Count:</strong> ${data.word_count || 'N/A'}</p>
+                        <p><strong>Generated:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
+                    </div>
+                    <div style="background: linear-gradient(135deg, #f0f8ff, #d1ecf1); padding: 20px; border-radius: 12px;">
+                        <h4 style="color: #004085;">⚡ Risk Assessment</h4>
+                        <p><strong>Risk Score:</strong> ${riskData.risk_score || 'N/A'}/100</p>
+                        <p><strong>Risk Level:</strong> ${riskData.overall_risk || 'Unknown'}</p>
+                        <p><strong>High Risks:</strong> ${(riskData.high_risk || []).length}</p>
+                        <p><strong>Medium Risks:</strong> ${(riskData.medium_risk || []).length}</p>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 30px;">
+                    <h3 style="margin-bottom: 15px;">📋 Contract Document</h3>
+                    <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 12px; padding: 25px; font-family: 'Courier New', monospace; font-size: 14px; line-height: 1.6; white-space: pre-wrap; max-height: 500px; overflow-y: auto;">
+${data.contract}
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button onclick="downloadContract()" class="btn btn-primary">📥 Download Contract</button>
+                    <button onclick="analyzeContract()" class="btn btn-secondary" style="margin-left: 15px;">🔍 Deep Analysis</button>
+                    <button onclick="shareViaWhatsApp()" class="btn btn-success" style="margin-left: 15px;">📱 Share via WhatsApp</button>
+                    <button onclick="createNewContract()" class="btn btn-outline" style="margin-left: 15px;">📄 Create New</button>
+                </div>
+                
+                <!-- WhatsApp Sharing Modal -->
+                <div id="whatsappModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%;">
+                        <h3 style="color: #667eea; margin-bottom: 20px;">📱 Share via WhatsApp</h3>
+                        <div id="whatsappContent">
+                            <!-- WhatsApp sharing options will be loaded here -->
+                        </div>
+                        <button onclick="closeWhatsAppModal()" class="btn btn-outline" style="margin-top: 20px;">Close</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function downloadContract() {
+            if (!currentContract) return;
+            
+            const blob = new Blob([currentContract.contract], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `contract_${currentContract.parameters.company_a}_${currentContract.parameters.company_b}_${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function analyzeContract() {
+            if (!currentContract) return;
+            window.open('/contract-analysis', '_blank');
+        }
+
+        function createNewContract() {
+            location.reload();
+        }
+
+        function retryGeneration() {
+            generateContract();
+        }
+
+        // WhatsApp Sharing Functions
+        function shareViaWhatsApp() {
+            if (!currentContract) {
+                alert('❌ No contract available to share');
+                return;
+            }
+
+            // Show simple phone input modal
+            showWhatsAppPhoneInput();
+        }
+
+        function showWhatsAppPhoneInput() {
+            document.getElementById('whatsappContent').innerHTML = `
+                <div style="text-align: center;">
+                    <p style="margin-bottom: 20px; color: #6c757d;">Enter recipient's WhatsApp number to share the contract:</p>
+                    <input type="tel" id="modalRecipientPhone" placeholder="+1234567890 or 1234567890" style="width: 100%; padding: 15px; border: 2px solid #e1e8ed; border-radius: 8px; margin-bottom: 15px; font-size: 16px;">
+                    <input type="text" id="modalRecipientName" placeholder="Client Name (optional)" style="width: 100%; padding: 15px; border: 2px solid #e1e8ed; border-radius: 8px; margin-bottom: 20px; font-size: 16px;">
+                    <button onclick="openWhatsAppDirectly()" class="btn btn-success" style="width: 100%; padding: 15px; font-size: 16px;">📱 Open WhatsApp</button>
+                    <button onclick="closeWhatsAppModal()" class="btn btn-outline" style="width: 100%; margin-top: 10px;">Cancel</button>
+                </div>
+            `;
+            document.getElementById('whatsappModal').style.display = 'block';
+        }
+
+        function openWhatsAppDirectly() {
+            const phone = document.getElementById('modalRecipientPhone').value.trim();
+            const name = document.getElementById('modalRecipientName').value.trim() || 'Client';
+
+            if (!phone) {
+                alert('❌ Please enter a phone number');
+                return;
+            }
+
+            // Clean phone number (remove spaces, dashes, etc.)
+            const cleanPhone = phone.replace(/\D/g, '');
+            
+            // Add country code if not present (assuming +1 for US/Canada)
+            let formattedPhone = cleanPhone;
+            if (cleanPhone.length === 10) {
+                formattedPhone = '1' + cleanPhone;
+            } else if (cleanPhone.length === 11 && cleanPhone[0] === '1') {
+                formattedPhone = cleanPhone;
+            }
+
+            // Create WhatsApp message
+            const contractParams = currentContract.parameters || {};
+            const riskAnalysis = currentContract.risk_analysis?.risk_analysis || {};
+            
+            const message = `📄 *CONTRACT READY FOR REVIEW*
+
+🤝 *Service Agreement*
+📋 From: ${contractParams.company_a || 'Service Provider'}
+👤 To: ${contractParams.company_b || name}
+🔧 Services: ${contractParams.services || 'Professional Services'}
+
+🤖 *AI Analysis Summary:*
+📊 Risk Score: ${riskAnalysis.risk_score || 'N/A'}/100
+⚠️ Risk Level: ${riskAnalysis.overall_risk || 'MEDIUM'}
+🧠 Generated by: AI Contract Platform
+
+📱 *Next Steps:*
+1. Review the contract document
+2. Check all terms and conditions  
+3. Contact us for any modifications
+4. Sign when ready to proceed
+
+⚡ Generated on: ${new Date().toLocaleString()}
+
+Need help? Reply to this message! 💬`;
+
+            // Create WhatsApp Web URL
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodedMessage}`;
+            
+            // Open WhatsApp Web
+            window.open(whatsappUrl, '_blank');
+            
+            // Close modal
+            closeWhatsAppModal();
+            
+            // Show success message
+            alert('✅ WhatsApp opened! Send the message and then share the contract document separately.');
+        }
+
+        function closeWhatsAppModal() {
+            document.getElementById('whatsappModal').style.display = 'none';
+        }
+
+        function showWhatsAppPhoneInput() {
+            document.getElementById('whatsappContent').innerHTML = `
+                <div style="text-align: center;">
+                    <p style="margin-bottom: 20px; color: #6c757d;">Enter recipient's WhatsApp number to share the contract:</p>
+                    <input type="tel" id="modalRecipientPhone" placeholder="+1234567890 or 1234567890" style="width: 100%; padding: 15px; border: 2px solid #e1e8ed; border-radius: 8px; margin-bottom: 15px; font-size: 16px;">
+                    <input type="text" id="modalRecipientName" placeholder="Client Name (optional)" style="width: 100%; padding: 15px; border: 2px solid #e1e8ed; border-radius: 8px; margin-bottom: 20px; font-size: 16px;">
+                    <button onclick="openWhatsAppDirectly()" class="btn btn-success" style="width: 100%; padding: 15px; font-size: 16px;">📱 Open WhatsApp</button>
+                    <button onclick="closeWhatsAppModal()" class="btn btn-outline" style="width: 100%; margin-top: 10px;">Cancel</button>
+                </div>
+            `;
+            document.getElementById('whatsappModal').style.display = 'block';
+        }
+
+        function openWhatsAppDirectly() {
+            const phone = document.getElementById('modalRecipientPhone').value.trim();
+            const name = document.getElementById('modalRecipientName').value.trim() || 'Client';
+
+            if (!phone) {
+                alert('❌ Please enter a phone number');
+                return;
+            }
+
+            // Clean phone number (remove spaces, dashes, etc.)
+            const cleanPhone = phone.replace(/\D/g, '');
+            
+            // Add country code if not present (assuming +1 for US/Canada)
+            let formattedPhone = cleanPhone;
+            if (cleanPhone.length === 10) {
+                formattedPhone = '1' + cleanPhone;
+            } else if (cleanPhone.length === 11 && cleanPhone[0] === '1') {
+                formattedPhone = cleanPhone;
+            }
+
+            // Create WhatsApp message
+            const contractParams = currentContract.parameters || {};
+            const riskAnalysis = currentContract.risk_analysis?.risk_analysis || {};
+            
+            const message = `📄 *CONTRACT READY FOR REVIEW*
+
+🤝 *Service Agreement*
+📋 From: ${contractParams.company_a || 'Service Provider'}
+👤 To: ${contractParams.company_b || name}
+🔧 Services: ${contractParams.services || 'Professional Services'}
+
+🤖 *AI Analysis Summary:*
+📊 Risk Score: ${riskAnalysis.risk_score || 'N/A'}/100
+⚠️ Risk Level: ${riskAnalysis.overall_risk || 'MEDIUM'}
+🧠 Generated by: AI Contract Platform
+
+📱 *Next Steps:*
+1. Review the contract document
+2. Check all terms and conditions  
+3. Contact us for any modifications
+4. Sign when ready to proceed
+
+⚡ Generated on: ${new Date().toLocaleString()}
+
+Need help? Reply to this message! 💬`;
+
+            // Create WhatsApp Web URL
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodedMessage}`;
+            
+            // Open WhatsApp Web
+            window.open(whatsappUrl, '_blank');
+            
+            // Close modal
+            closeWhatsAppModal();
+            
+            // Show success message
+            alert('✅ WhatsApp opened! Send the message and then share the contract document separately.');
+        }
+
+        // Essential navigation functions
+        function nextStep() {
+            console.log('nextStep called, currentStep:', currentStep, 'totalSteps:', totalSteps);
+            
+            if (currentStep < totalSteps) {
+                if (validateCurrentStep()) {
+                    currentStep++;
+                    updateWizard();
+                } else {
+                    console.log('Validation failed for step:', currentStep);
+                }
+            } else if (currentStep === totalSteps) {
+                // Generate contract
+                console.log('Generating contract...');
+                generateContract();
+            } else {
+                console.log('Validation failed or at final step');
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateWizard();
+            }
+        }
+
+        function validateCurrentStep() {
+            const section = document.getElementById(`section${currentStep}`);
+            const requiredInputs = section.querySelectorAll('[required]');
+            
+            for (let input of requiredInputs) {
+                if (!input.value.trim()) {
+                    input.focus();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function updateWizard() {
+            // Update progress bar
+            const progress = (currentStep / totalSteps) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            // Update steps
+            for (let i = 1; i <= totalSteps; i++) {
+                const step = document.getElementById(`step${i}`);
+                const section = document.getElementById(`section${i}`);
+                
+                step.classList.remove('active', 'completed');
+                section.classList.remove('active');
+                
+                if (i < currentStep) {
+                    step.classList.add('completed');
+                } else if (i === currentStep) {
+                    step.classList.add('active');
+                    section.classList.add('active');
+                }
+            }
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').style.display = currentStep > 1 ? 'block' : 'none';
+            document.getElementById('nextBtn').textContent = currentStep === totalSteps ? '🤖 Generate Contract' : 'Next →';
+            
+            // Update summary if on step 3
+            if (currentStep === 3) {
+                updateContractSummary();
+            }
+        }
+
+        function closeWhatsAppModal() {
+            document.getElementById('whatsappModal').style.display = 'none';
+        }
+
+        // Initialize the wizard
+        console.log('🎯 Initializing wizard - currentStep:', currentStep, 'totalSteps:', totalSteps);
+        updateWizard();
+        
+        // Add form submission handler to prevent default behavior
+        document.getElementById('dynamicContractForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            console.log('⚠️ Form submission prevented - using custom generateContract()');
+            return false;
+        });
+        
+        // Prevent Enter key from submitting form
+        document.getElementById('dynamicContractForm').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                console.log('⚠️ Enter key submission prevented');
+                return false;
+            }
+        });
+        
+        console.log('✅ Contract creation page loaded successfully');
+    </script>
+</body>
+</html>

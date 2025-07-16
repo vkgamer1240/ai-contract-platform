@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 AI Contract Creation Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .creation-form {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            display: none;
+        }
+
+        .contract-text {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .analysis-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateX(-5px);
+        }
+
+        .voice-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .voice-button:hover {
+            background: #5a67d8;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .voice-button.recording {
+            background: #e53e3e;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(229, 62, 62, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .voice-status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid, .analysis-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .creation-form, .results-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-button">← Back to Home</a>
+    
+    <!-- Voice Status Indicator -->
+    <div id="voiceStatus" class="voice-status">
+        🎤 Listening... Speak now!
+    </div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Contract Creation</h1>
+            <p>Generate professional contracts using YOUR fine-tuned RoBERTa model + Groq AI</p>
+        </div>
+
+        <div class="creation-form">
+            <h2 style="margin-bottom: 30px; color: #667eea;">📋 Contract Parameters</h2>
+            
+            <form id="contractForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="companyA">Service Provider (Company A)</label>
+                        <div style="position: relative;">
+                            <input type="text" id="companyA" name="company_a" placeholder="e.g., TechCorp Solutions LLC" required>
+                            <button type="button" class="voice-button" onclick="startVoiceInput('companyA')" title="Voice Input">
+                                🎤
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="companyB">Client (Company B)</label>
+                        <div style="position: relative;">
+                            <input type="text" id="companyB" name="company_b" placeholder="e.g., StartupXYZ Inc." required>
+                            <button type="button" class="voice-button" onclick="startVoiceInput('companyB')" title="Voice Input">
+                                🎤
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="services">Services Description</label>
+                        <div style="position: relative;">
+                            <textarea id="services" name="services" placeholder="Describe the services to be provided in detail..." required></textarea>
+                            <button type="button" class="voice-button" onclick="startVoiceInput('services')" title="Voice Input" style="top: 20px;">
+                                🎤
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="duration">Contract Duration</label>
+                        <select id="duration" name="duration" required>
+                            <option value="">Select Duration</option>
+                            <option value="3 months">3 Months</option>
+                            <option value="6 months">6 Months</option>
+                            <option value="12 months">12 Months</option>
+                            <option value="24 months">24 Months</option>
+                            <option value="ongoing">Ongoing (No End Date)</option>
+                            <option value="project-based">Project-Based</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="paymentTerms">Payment Terms</label>
+                        <select id="paymentTerms" name="payment_terms" required>
+                            <option value="">Select Payment Terms</option>
+                            <option value="monthly payments in advance">Monthly in Advance</option>
+                            <option value="monthly payments at month end">Monthly at Month End</option>
+                            <option value="quarterly payments">Quarterly Payments</option>
+                            <option value="milestone-based payments">Milestone-Based</option>
+                            <option value="upon completion">Upon Completion</option>
+                            <option value="50% upfront, 50% upon completion">50% Upfront, 50% Completion</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <div style="position: relative;">
+                            <input type="text" id="startDate" name="start_date" placeholder="e.g., January 1, 2025 or 'upon signing'" value="upon signing">
+                            <button type="button" class="voice-button" onclick="startVoiceInput('startDate')" title="Voice Input">
+                                🎤
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confidentiality">Confidentiality Level</label>
+                        <select id="confidentiality" name="confidentiality_level" required>
+                            <option value="standard">Standard Confidentiality</option>
+                            <option value="high">High Confidentiality</option>
+                            <option value="mutual">Mutual Confidentiality</option>
+                            <option value="minimal">Minimal Confidentiality</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button type="submit" class="btn btn-primary">🤖 Generate Contract with AI</button>
+                    <button type="reset" class="btn btn-secondary" style="margin-left: 15px;">🗑️ Clear Form</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="resultsContainer" class="results-container">
+            <div id="loadingState" style="text-align: center;">
+                <div class="spinner"></div>
+                <p>🤖 Generating your professional contract...</p>
+                <p style="font-size: 0.9em; color: #666; margin-top: 10px;">
+                    Using YOUR fine-tuned RoBERTa model + Groq AI for optimal results
+                </p>
+            </div>
+            
+            <div id="contractResults" style="display: none;">
+                <h2 style="color: #667eea; margin-bottom: 20px;">📄 Generated Contract</h2>
+                
+                <div class="analysis-grid" style="margin-bottom: 20px;">
+                    <div class="analysis-card">
+                        <h4 style="color: #28a745;">🤖 Generation Details</h4>
+                        <div id="generationDetails"></div>
+                    </div>
+                    <div class="analysis-card">
+                        <h4 style="color: #007bff;">⚡ Risk Analysis</h4>
+                        <div id="riskAnalysis"></div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h3 style="margin-bottom: 15px;">📋 Contract Document</h3>
+                    <div id="contractText" class="contract-text"></div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button onclick="downloadContract()" class="btn btn-primary">📥 Download Contract</button>
+                    <button onclick="analyzeContract()" class="btn btn-secondary" style="margin-left: 15px;">🔍 Deep Analysis</button>
+                    <button onclick="createNew()" class="btn btn-secondary" style="margin-left: 15px;">📄 Create New</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentContract = null;
+
+        document.getElementById('contractForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            document.getElementById('resultsContainer').style.display = 'block';
+            document.getElementById('loadingState').style.display = 'block';
+            document.getElementById('contractResults').style.display = 'none';
+            
+            // Scroll to results
+            document.getElementById('resultsContainer').scrollIntoView({ behavior: 'smooth' });
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const contractParams = Object.fromEntries(formData.entries());
+            
+            try {
+                console.log('Sending contract creation request...', contractParams);
+                
+                const response = await fetch('/api/create_contract', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(contractParams)
+                });
+                
+                const data = await response.json();
+                console.log('Contract creation response:', data);
+                
+                if (response.ok && data.success) {
+                    currentContract = data;
+                    displayContractResults(data);
+                } else {
+                    throw new Error(data.error || 'Contract creation failed');
+                }
+                
+            } catch (error) {
+                console.error('Contract creation error:', error);
+                document.getElementById('loadingState').innerHTML = `
+                    <div style="color: #dc3545; text-align: center;">
+                        <h3>❌ Contract Creation Failed</h3>
+                        <p>${error.message}</p>
+                        <button onclick="createNew()" class="btn btn-secondary" style="margin-top: 15px;">Try Again</button>
+                    </div>
+                `;
+            }
+        });
+
+        function displayContractResults(data) {
+            // Hide loading, show results
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('contractResults').style.display = 'block';
+            
+            // Generation details
+            document.getElementById('generationDetails').innerHTML = `
+                <p><strong>Model Used:</strong> ${data.generation_engine}</p>
+                <p><strong>Analysis Engine:</strong> ${data.analysis_engine}</p>
+                <p><strong>Word Count:</strong> ${data.word_count || 'N/A'}</p>
+                <p><strong>Generated:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
+            `;
+            
+            // Risk analysis
+            const riskAnalysis = data.risk_analysis || {};
+            const riskData = riskAnalysis.risk_analysis || {};
+            document.getElementById('riskAnalysis').innerHTML = `
+                <p><strong>Risk Score:</strong> ${riskData.risk_score || 'N/A'}/100</p>
+                <p><strong>Risk Level:</strong> ${riskData.overall_risk || 'Unknown'}</p>
+                <p><strong>High Risks:</strong> ${(riskData.high_risk || []).length}</p>
+                <p><strong>Medium Risks:</strong> ${(riskData.medium_risk || []).length}</p>
+            `;
+            
+            // Contract text
+            document.getElementById('contractText').textContent = data.contract;
+        }
+
+        function downloadContract() {
+            if (!currentContract) return;
+            
+            const blob = new Blob([currentContract.contract], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `contract_${currentContract.parameters.company_a}_${currentContract.parameters.company_b}_${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function analyzeContract() {
+            if (!currentContract) return;
+            
+            // Open contract analysis page with the generated contract
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/contract-analysis';
+            form.target = '_blank';
+            
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'contract_text';
+            input.value = currentContract.contract;
+            
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+        }
+
+        function createNew() {
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('contractForm').reset();
+            currentContract = null;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Voice Recognition Functionality
+        let recognition = null;
+        let currentField = null;
+        let isListening = false;
+
+        function initVoiceRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'en-US';
+
+                recognition.onstart = function() {
+                    isListening = true;
+                    document.getElementById('voiceStatus').style.display = 'block';
+                    if (currentField) {
+                        const button = document.querySelector(`[onclick="startVoiceInput('${currentField}')"]`);
+                        if (button) {
+                            button.classList.add('recording');
+                            button.innerHTML = '🔴';
+                        }
+                    }
+                };
+
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    console.log('Voice input:', transcript);
+                    
+                    if (currentField) {
+                        const field = document.getElementById(currentField);
+                        if (field) {
+                            if (field.tagName === 'TEXTAREA') {
+                                // For textarea, append to existing content
+                                field.value = field.value ? field.value + ' ' + transcript : transcript;
+                            } else {
+                                // For input fields, replace content
+                                field.value = transcript;
+                            }
+                            
+                            // Trigger change event
+                            field.dispatchEvent(new Event('change'));
+                        }
+                    }
+                };
+
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error:', event.error);
+                    let errorMessage = 'Voice input failed. ';
+                    
+                    switch(event.error) {
+                        case 'no-speech':
+                            errorMessage += 'No speech detected. Please try again.';
+                            break;
+                        case 'audio-capture':
+                            errorMessage += 'Microphone not available.';
+                            break;
+                        case 'not-allowed':
+                            errorMessage += 'Microphone permission denied.';
+                            break;
+                        default:
+                            errorMessage += 'Please try again.';
+                    }
+                    
+                    showVoiceMessage(errorMessage, 'error');
+                };
+
+                recognition.onend = function() {
+                    isListening = false;
+                    document.getElementById('voiceStatus').style.display = 'none';
+                    
+                    if (currentField) {
+                        const button = document.querySelector(`[onclick="startVoiceInput('${currentField}')"]`);
+                        if (button) {
+                            button.classList.remove('recording');
+                            button.innerHTML = '🎤';
+                        }
+                    }
+                    
+                    currentField = null;
+                };
+            } else {
+                console.warn('Speech recognition not supported');
+            }
+        }
+
+        function startVoiceInput(fieldId) {
+            if (!recognition) {
+                alert('Voice input not supported in this browser. Please use Chrome, Edge, or Safari.');
+                return;
+            }
+
+            if (isListening) {
+                recognition.stop();
+                return;
+            }
+
+            currentField = fieldId;
+            
+            try {
+                recognition.start();
+                showVoiceMessage('🎤 Listening... Speak clearly!', 'info');
+            } catch (error) {
+                console.error('Error starting voice recognition:', error);
+                showVoiceMessage('Voice input failed. Please try again.', 'error');
+            }
+        }
+
+        function showVoiceMessage(message, type = 'info') {
+            const status = document.getElementById('voiceStatus');
+            status.textContent = message;
+            status.style.background = type === 'error' ? 'rgba(220, 53, 69, 0.9)' : 'rgba(0, 0, 0, 0.8)';
+            status.style.display = 'block';
+            
+            if (type === 'error') {
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Voice Commands for Quick Fill
+        function processVoiceCommand(transcript) {
+            const lowerTranscript = transcript.toLowerCase();
+            
+            // Smart field detection based on content
+            if (lowerTranscript.includes('company') || lowerTranscript.includes('corporation') || lowerTranscript.includes('llc') || lowerTranscript.includes('inc')) {
+                if (!document.getElementById('companyA').value) {
+                    document.getElementById('companyA').value = transcript;
+                } else if (!document.getElementById('companyB').value) {
+                    document.getElementById('companyB').value = transcript;
+                }
+            } else if (lowerTranscript.includes('service') || lowerTranscript.includes('development') || lowerTranscript.includes('consulting')) {
+                document.getElementById('services').value = transcript;
+            } else if (lowerTranscript.includes('month') || lowerTranscript.includes('year') || lowerTranscript.includes('duration')) {
+                // Handle duration in voice
+                document.getElementById('startDate').value = transcript;
+            }
+        }
+
+        // Initialize voice recognition when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initVoiceRecognition();
+            
+            // Add voice tips
+            const voiceTip = document.createElement('div');
+            voiceTip.innerHTML = `
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
+                    🎤 <strong>Voice Input Available!</strong> Click the microphone icons to speak your input. 
+                    <br><small>Works best in Chrome, Edge, and Safari browsers.</small>
+                </div>
+            `;
+            
+            const form = document.querySelector('.creation-form');
+            form.insertBefore(voiceTip, form.firstChild.nextSibling);
+        });
+    </script>
+</body>
+</html>

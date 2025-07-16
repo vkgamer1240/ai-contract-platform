@@ -1,0 +1,25 @@
+\section{Related Work}
+
+\subsection{Legal Natural Language Processing}
+
+The application of Natural Language Processing to legal documents has evolved significantly with the introduction of transformer-based models. Early approaches relied heavily on rule-based systems and keyword matching for contract analysis \cite{sulea2017predicting}. The emergence of BERT and its variants marked a significant advancement in legal text understanding capabilities \cite{kenton2019bert}.
+
+RoBERTa, with its optimized training procedure, has demonstrated superior performance in various NLP tasks including question-answering scenarios \cite{liu2019roberta}. The model's ability to handle long-context documents makes it particularly suitable for legal contract analysis, where understanding clause relationships and context is crucial.
+
+\subsection{Contract Understanding and Analysis}
+
+The Contract Understanding Atticus Dataset (CUAD) represents a significant milestone in contract analysis research \cite{hendrycks2021cuad}. This expert-annotated dataset contains 510 contracts across 41 legal categories, enabling supervised learning approaches for contract clause extraction and classification. The dataset establishes benchmarks for tasks such as governing law identification, termination clause extraction, and liability assessment.
+
+Previous work on CUAD has shown that transformer models can achieve meaningful performance on contract understanding tasks, though the challenging nature of legal language ensures that even state-of-the-art models face significant limitations. The reported baseline performance on CUAD demonstrates the difficulty of precise clause extraction in legal documents.
+
+\subsection{AI-Assisted Document Generation}
+
+Large language models have shown promise in generating coherent text across various domains, including legal documents \cite{brown2020language}. However, ensuring legal accuracy and compliance remains a significant challenge when using general-purpose language models for specialized legal document generation.
+
+Recent approaches have explored the combination of template-based generation with AI assistance to maintain structural consistency while leveraging the natural language capabilities of large models. This hybrid approach addresses some of the reliability concerns associated with purely generative methods.
+
+\subsection{Legal Education and Accessibility}
+
+Traditional legal education relies heavily on theoretical frameworks and case studies, often creating barriers for practical application by non-experts \cite{susskind2017future}. Digital platforms have begun to address these accessibility challenges, though most existing solutions lack interactive, hands-on components for practical legal document understanding.
+
+The concept of explainable AI has particular relevance in legal applications, where users need to understand the reasoning behind AI recommendations \cite{gunning2017explainable}. This is especially critical in contract analysis, where users must make informed decisions based on AI-generated insights.
