@@ -33,6 +33,29 @@ vocab.json
 tokenizer_config.json
 special_tokens_map.json
 
+# Large project files that shouldn't be deployed
+*.bin
+*.pt
+*.pth
+pytorch_model.bin
+training_args.bin
+*.pdf
+LLM Project Presentation.pdf
+Team_04_report.pdf
+
+# Education assistant copies (duplicates)
+education-assistant - Copy/
+
+# Virtual environments (contain large files)
+*/venv/
+venv/
+*/env/
+
+# Large prediction files
+nbest_predictions_.json
+predictions_.json
+null_odds_.json
+
 # Predictions and outputs
 predictions_*.json
 nbest_predictions_*.json
@@ -96,3 +119,4 @@ coverage.xml
 .mypy_cache/
 .dmypy.json
 dmypy.json
+.vercel
