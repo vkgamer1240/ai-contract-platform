@@ -36,6 +36,15 @@ An advanced AI-powered platform for contract analysis, creation, and legal educa
 
 ## 🛠️ Installation & Setup
 
+⚠️ **Security First**: Before running the application, read `SECURITY.md` and set up your environment variables properly.
+
+### Environment Setup
+1. Copy the environment template:
+   ```bash
+   cp .env.template .env
+   ```
+2. Edit `.env` and add your API keys (never commit this file!)
+
 ### Quick Start
 
 1. **Run the setup script**:
