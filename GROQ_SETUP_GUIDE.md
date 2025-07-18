@@ -1,26 +1,5 @@
 # 🚀 Enhanced CUAD Contract Analysis with Groq API Integration
 
-## Quick Answer: **YES, you need a Groq API key** for the advanced features!
-
-### 🔑 **How to Get Your FREE Groq API Key:**
-
-1. **Go to**: https://console.groq.com/
-2. **Sign up** for a free account (takes 2 minutes)
-3. **Navigate to** "API Keys" section
-4. **Create** a new API key
-5. **Copy** the key (starts with `gsk_`)
-
-### 💡 **Why Use Groq API?**
-
-- **🚀 ULTRA FAST**: 500+ tokens/second
-- **🆓 FREE**: Generous free tier
-- **🧠 SMART**: Llama3 8B model for advanced analysis
-- **⚡ REAL-TIME**: Instant contract insights
-
----
-
-## 🎯 **What You Get with Groq Integration:**
-
 ### **Without Groq (CUAD Only):**
 - ✅ Basic contract term extraction
 - ✅ Standard CUAD questions
@@ -34,21 +13,7 @@
 - 📊 **Comprehensive Reports** - Detailed analysis with explanations
 - ⚠️ **Risk Scoring** - Automated risk level detection
 
----
-
-## 🛠️ **Setup Instructions:**
-
-### **Option 1: Quick Setup**
-```bash
-# 1. Get your Groq API key from https://console.groq.com/
-# 2. Set environment variable
-set GROQ_API_KEY=your_groq_key_here
-
-# 3. Run the enhanced system
-python enhanced_app.py
-```
-
-### **Option 2: Automated Setup**
+### **: Automated Setup**
 ```bash
 python setup_enhanced.py
 ```
@@ -60,7 +25,7 @@ This script will:
 
 ---
 
-## 🧪 **Testing Your Enhanced System:**
+## 🧪 **Testing our Enhanced System:**
 
 ### **Test 1: Basic CUAD Model**
 ```python
@@ -167,10 +132,6 @@ python test_enhanced.py
 
 # Advanced testing
 python advanced_test.py
-```
-
----
-
 ## 🚨 **Troubleshooting:**
 
 ### **"Groq API Error"**
@@ -192,20 +153,6 @@ python enhanced_app.py
 
 ---
 
-## 🎉 **Next Steps:**
-
-1. **Get Groq API Key**: https://console.groq.com/ (2 minutes)
-2. **Run Setup**: `python setup_enhanced.py`
-3. **Test System**: `python test_enhanced.py`
-4. **Launch Web Interface**: `python enhanced_app.py`
-5. **Analyze Contracts**: Visit http://localhost:5000
-
----
-
-## 💡 **Pro Tips:**
-
-- 🔄 **Start with sample contracts** to see the difference
-- 📊 **Compare CUAD vs Groq results** for validation
 - ⚠️ **Pay attention to risk scores** for important contracts
 - 📱 **Use app-specific analysis** for mobile/SaaS agreements
 - 🔍 **Try different question types** to see advanced capabilities
