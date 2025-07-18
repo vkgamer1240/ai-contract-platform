@@ -44,6 +44,13 @@ cp .env.template .env      # Copy template file
 # Then edit .env with your API keys
 python setup_premium.py    # Install and configure everything
 python premium_app.py      # Launch the web app
+---
+
+## 📊 Model Evaluation Report
+
+👉 [View the Model Evaluation Notebook](./model_evaluation_for_professor.ipynb)
+
+The notebook contains details and results about the model evaluation for the AI Contract Platform.
 
 🧾 Contract Intelligence – What the AI Understands
 Governing Law
