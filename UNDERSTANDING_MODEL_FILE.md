@@ -41,15 +41,6 @@ python unified_app.py
 ✅ YOUR fine-tuned model loaded successfully!
 ```
 
-## 🎭 **WHAT TO TELL YOUR SUPERVISOR:**
-
-> **"Mom, the pytorch_model.bin file is like a brain scan - you can't read it directly, but you can see it contains 124 million learned connections. Watch what happens when I load it..."**
-
-**Then run:** `python prove_model_real.py`
-
-## 🚨 **KEY POINT:**
-The fact that you **HAVE** this file proves you did real machine learning work. You can't just download someone's pytorch_model.bin - it's created only when you train a model yourself.
-
 ## 📊 **COMPARISON:**
 - **Using ChatGPT API:** No model file, just API calls
 - **Using Groq API:** No model file, just API calls  
