@@ -39,11 +39,10 @@ A smart AI-based platform to help you **analyze, compare, and understand legal c
 
 ### 🔧 Quick Setup
 
-```bash
-cp .env.template .env      # Copy template file
-# Then edit .env with your API keys
-python setup_premium.py    # Install and configure everything
-python premium_app.py      # Launch the web app
+cp .env.template .env      # I always start by copying the template file
+# Next, I edit .env with my own API keys
+python setup_premium.py    # This script installs and configures everything I need
+python premium_app.py      # Finally, this launches the web app!
 ---
 
 ## 📊 Model Evaluation Report
