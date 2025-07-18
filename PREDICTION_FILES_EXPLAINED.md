@@ -1,4 +1,4 @@
-# 📊 UNDERSTANDING YOUR PREDICTION FILES
+# 📊 UNDERSTANDING OUR PREDICTION FILES
 ## The Smoking Gun Evidence of Real Model Training
 
 ---
