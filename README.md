@@ -39,8 +39,8 @@
 
 | Metric | Performance | Description |
 |--------|-------------|-------------|
-| **🎯 Accuracy** | `90%+` | Contract clause extraction accuracy |
-| **⚡ Speed** | `< 3 sec` | Average analysis time per contract |
+| **🎯 Accuracy** | `84%+` | Contract clause extraction accuracy |
+| **⚡ Speed** | `< 39 sec` | Average analysis time per contract |
 | **📊 Model Size** | `473MB` | Fine-tuned RoBERTa parameters |
 | **📚 Training Data** | `13,000+` | CUAD dataset contracts |
 | **🔍 Categories** | `41 types` | Legal clause classifications |
@@ -94,10 +94,7 @@
 
 | Platform | Type | Status | Command |
 |----------|------|---------|---------|
-| **🔗 Live Demo** | Frontend | ✅ Active | [Visit Site](https://ai-contract-frontend-2t3qrdfiw-vamsi-narendras-projects.vercel.app/) |
 | **💻 Local Development** | Full Stack | ✅ Ready | `python unified_app.py` |
-| **☁️ Vercel** | Frontend | ✅ Deployed | `vercel --prod` |
-| **🚂 Railway** | Backend | 🟡 Ready | Deploy Python app |
 | **🐳 Docker** | Containerized | 🔄 Coming Soon | Full stack container |
 
 </div>
