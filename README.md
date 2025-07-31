@@ -94,10 +94,7 @@
 
 | Platform | Type | Status | Command |
 |----------|------|---------|---------|
-| **🔗 Live Demo** | Frontend | ✅ Active | [Visit Site](https://ai-contract-frontend-2t3qrdfiw-vamsi-narendras-projects.vercel.app/) |
 | **💻 Local Development** | Full Stack | ✅ Ready | `python unified_app.py` |
-| **☁️ Vercel** | Frontend | ✅ Deployed | `vercel --prod` |
-| **🚂 Railway** | Backend | 🟡 Ready | Deploy Python app |
 | **🐳 Docker** | Containerized | 🔄 Coming Soon | Full stack container |
 
 </div>
