@@ -414,18 +414,6 @@ Here are the key interfaces and outputs of the AI Contract Platform:
 
 </div>
 
-### 📊 **Analysis Dashboard & Results**
-
-<table>
-<tr>
-<td width="50%" align="center">
-
-#### 🔍 Contract Upload & Processing
-![Contract Analysis Dashboard](./output1.png)
-*User-friendly upload interface with drag-and-drop functionality and real-time processing status*
-
-</td>
-<td width="50%" align="center">
 
 #### 📈 AI Analysis Engine in Action
 ![AI Processing Interface](./output2.png)
@@ -464,9 +452,9 @@ Here are the key interfaces and outputs of the AI Contract Platform:
 </td>
 <td width="50%" align="center">
 
-#### ⚡ Groq API Enhancement
+#### ⚡ User Details
 ![Enhanced AI Analysis](./output6.png)
-*Advanced AI capabilities showcasing cross-model validation and enhanced contract understanding*
+* user details*
 
 </td>
 </tr>
@@ -475,7 +463,7 @@ Here are the key interfaces and outputs of the AI Contract Platform:
 
 #### 📊 Comparative Analysis
 ![Contract Comparison](./output7.png)
-*Side-by-side contract comparison highlighting differences, similarities, and risk variations*
+*summary*
 
 </td>
 <td width="50%" align="center">
@@ -486,6 +474,19 @@ Here are the key interfaces and outputs of the AI Contract Platform:
 
 </td>
 </tr>
+
+### 📊 **contract creation & Results**
+
+<table>
+<tr>
+<td width="50%" align="center">
+
+#### 🔍 Contract Upload & Processing
+![Contract creation](./output1.png)
+*Contract Drafting creation*
+
+</td>
+<td width="50%" align="center">
 </table>
 
 ### 🎯 **Key Output Highlights:**
