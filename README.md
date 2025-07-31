@@ -1,38 +1,47 @@
+<<<<<<< HEAD
 # Premium Contract Analysis Platform
+=======
+# 🤖 AI-Powered Contract Analysis Platform
 
-## 🚀 Overview
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/tree/main/project)
+>>>>>>> 1f5e7ef14039f6da1ec956d7ef316c01910637ee
 
+---
+
+<<<<<<< HEAD
 The Premium Contract Analysis Platform is an advanced AI-powered system for analyzing contracts, agreements, and legal documents. It combines the power of the fine-tuned CUAD (Contract Understanding Attentive Dataset) RoBERTa model with Groq API integration for comprehensive contract analysis, risk assessment, and compliance checking.
+=======
+## 🚀 What is This?
+
+A smart AI-based platform to help you **analyze, compare, and understand legal contracts**. Powered by fine-tuned RoBERTa models and enhanced with the Groq API, this tool is designed for legal professionals, startups, educators, and students alike.
+
+---
+>>>>>>> 1f5e7ef14039f6da1ec956d7ef316c01910637ee
 
 ## ✨ Features
 
-### Core Analysis Features
-- **📄 Single Contract Analysis**: Comprehensive analysis of individual contracts
-- **📚 Batch Processing**: Analyze multiple contracts simultaneously with comparative insights
-- **⚖️ Contract Comparison**: Side-by-side comparison of two contracts with detailed differences
-- **✅ Compliance Check**: App Store and Google Play compliance verification for mobile apps
-- **🚨 Advanced Risk Assessment**: Detailed risk scoring with categorized findings
+### 🔍 Core Contract Capabilities
+- **Single Contract Analysis**: Upload a contract and get full AI-based breakdowns.
+- **Batch Analysis**: Process multiple contracts at once.
+- **Contract Comparison**: Compare two contracts side-by-side.
+- **App Compliance Check**: Validate contracts for App Store & Play Store compliance.
+- **Risk Scoring**: Get detailed, color-coded risk scores.
 
-### Enhanced AI Capabilities
-- **🤖 CUAD Model Integration**: Fine-tuned RoBERTa model for contract understanding
-- **🧠 Groq API Enhancement**: Advanced AI analysis for deeper insights
-- **📊 Multi-Model Validation**: Cross-validation between CUAD and Groq for accuracy
-- **🎯 Specialized Prompts**: Optimized prompts for different contract types
+### 🧠 AI-Powered Intelligence
+- **CUAD RoBERTa Model**: Trained on real contract clauses.
+- **Groq API Integration**: Faster, deeper analysis (optional).
+- **Cross-Model Validation**: Compare CUAD and Groq results for more accuracy.
+- **Prompt Optimization**: Automatically adjusts questions based on contract type.
 
-### Web Interface Features
-- **🌐 Modern Web UI**: Responsive, intuitive interface with tabbed navigation
-- **📱 Mobile-Friendly**: Works on desktop, tablet, and mobile devices
-- **🎨 Visual Results**: Color-coded risk levels, progress bars, and interactive elements
-- **💾 Export Capabilities**: Generate and download detailed reports in Markdown format
+### 🌐 Clean User Interface
+- **Modern Web UI**: Responsive, tabbed, and easy to use.
+- **Mobile-Optimized**: Works across devices.
+- **Visual Feedback**: Progress bars, highlights, and collapsible sections.
+- **Export Reports**: Download results in Markdown format.
 
-### Advanced Features
-- **🔍 Contract Type Detection**: Automatic identification of contract categories
-- **📈 Risk Scoring**: Numerical risk assessment with detailed breakdown
-- **💡 Recommendations**: AI-generated suggestions for contract improvements
-- **🏪 App Store Compliance**: Specialized checks for iOS and Android app agreements
-- **📋 Report Generation**: Comprehensive reports with executive summaries
+---
 
-## � Project Screenshots
+## 📸 Project Screenshots
 
 ### Live Application Interface
 
@@ -61,150 +70,50 @@ Here are the key interfaces and outputs of the AI Contract Platform:
 - ✅ **Professional Reports**: Clean, exportable analysis reports
 - ✅ **User-friendly Interface**: Intuitive navigation and clear information hierarchy
 
-## �🛠️ Installation & Setup
+---
 
-### Quick Start
+## 🛠️ Getting Started
 
-1. **Run the setup script**:
-   ```bash
-   python setup_premium.py
-   ```
+> ⚠️ Before you begin, read `SECURITY.md` and configure your `.env` file securely with your API keys.
 
-2. **Start the web interface**:
-   ```bash
-   python premium_app.py
-   ```
+### 🔧 Quick Setup
 
-3. **Access the platform**:
-   Open your browser and go to `http://localhost:5000`
+cp .env.template .env      # I always start by copying the template file
+# Next, I edit .env with my own API keys
+python setup_premium.py    # This script installs and configures everything I need
+python premium_app.py      # Finally, this launches the web app!
+---
 
-### Manual Setup
+## 📊 Model Evaluation Report
 
-1. **Install dependencies**:
-   ```bash
-   pip install torch transformers flask requests pandas numpy
-   ```
+👉 [View the Model Evaluation Notebook](./model_evaluation_for_professor.ipynb)
 
-2. **Set up Groq API** (optional but recommended):
-   - Get your free API key from [Groq Console](https://console.groq.com/)
-   - Set environment variable: `export GROQ_API_KEY=your_api_key`
+The notebook contains details and results about the model evaluation for the AI Contract Platform.
 
-3. **Verify model files**:
-   Ensure you have the CUAD model files:
-   - `config.json`
-   - `pytorch_model.bin`
-   - `tokenizer_config.json`
-   - `vocab.json`
-   - `merges.txt`
+🧾 Contract Intelligence – What the AI Understands
+Governing Law
 
-Then open your browser to `http://localhost:5000` to access the web interface where you can:
-- Upload contract text
-- Ask specific questions
-- Get full contract analysis
+Termination Clauses
 
-### 3. Model Evaluation
+Liability Provisions
 
-Evaluate your model's performance:
+Payment Terms
 
-```bash
-python evaluate_model.py
-```
+Intellectual Property
 
-This will show:
-- Model statistics
-- Prediction analysis
-- Performance on sample data
+Confidentiality Requirements
 
-## Model Capabilities
+Force Majeure Conditions
 
-The model can extract various types of information from legal contracts:
+Warranties
 
-- **Governing Law**: Which jurisdiction's laws govern the contract
-- **Termination Clauses**: Conditions under which the contract can be terminated
-- **Liability Provisions**: Limitations and allocations of liability
-- **Payment Terms**: Payment schedules, amounts, and conditions
-- **Intellectual Property**: IP ownership and licensing terms
-- **Confidentiality**: Non-disclosure and confidentiality requirements
-- **Force Majeure**: Extraordinary circumstances provisions
-- **Warranty**: Warranties and guarantees provided
-- **Dispute Resolution**: Methods for resolving disputes
-- **Renewal Terms**: Contract renewal and extension conditions
+Dispute Resolution Methods
 
-## API Usage
+Renewal & Extension Terms
+⚠️ Limitations
+English contracts only (for now)
 
-### Single Question Analysis
+Performance drops on unusual or niche contract styles
 
-```python
-from transformers import RobertaTokenizer, RobertaForQuestionAnswering
+No “world knowledge” — works only with what’s in the text
 
-tokenizer = RobertaTokenizer.from_pretrained('./')
-model = RobertaForQuestionAnswering.from_pretrained('./')
-
-context = "Your contract text here..."
-question = "What are the payment terms?"
-
-inputs = tokenizer.encode_plus(question, context, return_tensors='pt')
-outputs = model(**inputs)
-# Process outputs to get answer...
-```
-
-### Web API Endpoints
-
-- `POST /analyze` - Analyze single question
-- `POST /analyze_full` - Full contract analysis
-
-## Performance Tips
-
-1. **Text Length**: The model has a maximum sequence length of 512 tokens. For longer contracts, consider chunking the text.
-
-2. **Question Formulation**: Use clear, specific questions for better results:
-   - Good: "What are the payment terms?"
-   - Better: "What is the payment schedule and amount?"
-
-3. **Confidence Scores**: The model provides confidence scores. Lower scores may indicate:
-   - The information isn't in the contract
-   - The question is ambiguous
-   - The text is unclear
-
-## Customization
-
-To adapt the model for other legal document types:
-
-1. **Fine-tune further**: Use additional domain-specific data
-2. **Adjust questions**: Modify the predefined questions in the scripts
-3. **Post-processing**: Add domain-specific post-processing rules
-
-## Next Steps
-
-1. **Deploy to Production**: Use services like AWS, Azure, or Google Cloud
-2. **Create API**: Build a RESTful API for integration
-3. **Mobile App**: Develop mobile applications
-4. **Integration**: Integrate with document management systems
-5. **Batch Processing**: Process multiple contracts simultaneously
-
-## Troubleshooting
-
-**Common Issues:**
-
-1. **Memory Errors**: Reduce batch size or text length
-2. **Slow Performance**: Use GPU if available (`model.to('cuda')`)
-3. **Poor Results**: Check if the contract language matches training data
-
-## Model Limitations
-
-- Trained primarily on English contracts
-- Performance may vary with non-standard contract language
-- Cannot understand context beyond the provided text
-- May struggle with highly technical or domain-specific terms
-
-## Citation
-
-If you use this model, please cite the original CUAD paper:
-```
-@article{hendrycks2021cuad,
-  title={CUAD: An Expert-Annotated NLP Dataset for Legal Contract Review},
-  author={Hendrycks, Dan and Burns, Collin and Chen, Anya and Ball, Spencer},
-  journal={arXiv preprint arXiv:2103.06268},
-  year={2021}
-}
-```

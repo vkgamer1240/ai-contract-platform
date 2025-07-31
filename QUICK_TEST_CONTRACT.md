@@ -38,11 +38,6 @@ DISPUTE RESOLUTION: All disputes will be resolved through binding arbitration in
 - **Termination:** 14 days notice
 - **Liability Limit:** $15,000
 
-## 🎬 **Perfect for Supervisor Demo:**
-1. **Copy the contract text above**
-2. **Paste in your app**
-3. **Click "Analyze Contract"**
-4. **Results in ~10-15 seconds**
-5. **Click "🎯 Accuracy Assessment" to show transparency**
+
 
 This proves your model works on ANY contract, not just pre-loaded examples! 🚀

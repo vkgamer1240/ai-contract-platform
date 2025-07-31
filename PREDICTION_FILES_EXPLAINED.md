@@ -1,4 +1,4 @@
-# 📊 UNDERSTANDING YOUR PREDICTION FILES
+# 📊 UNDERSTANDING OUR PREDICTION FILES
 ## The Smoking Gun Evidence of Real Model Training
 
 ---
@@ -68,13 +68,6 @@
 - **Volume:** 4,182 predictions across 41 legal clause types
 
 ---
-
-## 🎭 **WHAT TO TELL YOUR SUPERVISOR**
-
-### **When She Asks About These Files:**
-
-**Opening Explanation:**
-> *"These are my model's actual prediction results from evaluating on the CUAD test set. The predictions_.json file contains the final answers, and nbest_predictions_.json shows the top candidate answers with confidence scores."*
 
 ### **Key Points to Emphasize:**
 
@@ -157,7 +150,3 @@ Legal clause types:     41
 
 ---
 
-## 💡 **Quick Demo Script**
-
-**What to say while showing the files:**
-> *"Here are 4,182 predictions my model made on legal contracts. Each entry shows what my model extracted - like governing law, payment terms, liability clauses. The nbest file shows my model's confidence - see this one is 98.9% confident in its answer. You can't fake 47MB of structured model outputs like this."*
