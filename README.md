@@ -1,10 +1,8 @@
-# AI-Powered Contract Analysis Platform
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/YOUR_REPO_NAME/tree/main/project)
+# Premium Contract Analysis Platform
 
 ## 🚀 Overview
 
-An advanced AI-powered platform for contract analysis, creation, and legal education. This comprehensive system combines fine-tuned RoBERTa models with modern web technologies to provide contract understanding, risk assessment, and educational tools for legal professionals, businesses, and students.
+The Premium Contract Analysis Platform is an advanced AI-powered system for analyzing contracts, agreements, and legal documents. It combines the power of the fine-tuned CUAD (Contract Understanding Attentive Dataset) RoBERTa model with Groq API integration for comprehensive contract analysis, risk assessment, and compliance checking.
 
 ## ✨ Features
 
@@ -34,16 +32,36 @@ An advanced AI-powered platform for contract analysis, creation, and legal educa
 - **🏪 App Store Compliance**: Specialized checks for iOS and Android app agreements
 - **📋 Report Generation**: Comprehensive reports with executive summaries
 
-## 🛠️ Installation & Setup
+## � Project Screenshots
 
-⚠️ **Security First**: Before running the application, read `SECURITY.md` and set up your environment variables properly.
+### Live Application Interface
 
-### Environment Setup
-1. Copy the environment template:
-   ```bash
-   cp .env.template .env
-   ```
-2. Edit `.env` and add your API keys (never commit this file!)
+Here are the key interfaces and outputs of the AI Contract Platform:
+
+#### 1. Platform Landing Page
+![Platform Landing Page](./image1.jpg)
+*Modern, responsive landing page showcasing the AI Contract Platform's capabilities and features*
+
+#### 2. Contract Analysis Dashboard
+![Contract Analysis Interface](./image2.jpg)
+*Interactive contract analysis dashboard with upload functionality and real-time processing*
+
+#### 3. AI Analysis Results
+![Analysis Results Display](./image3.jpg)
+*Comprehensive analysis results showing extracted contract terms, risk assessment, and AI insights*
+
+#### 4. Advanced Features & Reports
+![Advanced Features Interface](./image4.jpg)
+*Advanced features including report generation, compliance checking, and detailed contract breakdowns*
+
+### Key Visual Features Demonstrated:
+- ✅ **Responsive Design**: Modern UI that works across all devices
+- ✅ **Real-time Processing**: Live contract analysis with progress indicators
+- ✅ **Interactive Results**: Color-coded risk levels and detailed findings
+- ✅ **Professional Reports**: Clean, exportable analysis reports
+- ✅ **User-friendly Interface**: Intuitive navigation and clear information hierarchy
+
+## �🛠️ Installation & Setup
 
 ### Quick Start
 
