@@ -39,8 +39,8 @@
 
 | Metric | Performance | Description |
 |--------|-------------|-------------|
-| **🎯 Accuracy** | `90%+` | Contract clause extraction accuracy |
-| **⚡ Speed** | `< 3 sec` | Average analysis time per contract |
+| **🎯 Accuracy** | `84%+` | Contract clause extraction accuracy |
+| **⚡ Speed** | `< 39 sec` | Average analysis time per contract |
 | **📊 Model Size** | `473MB` | Fine-tuned RoBERTa parameters |
 | **📚 Training Data** | `13,000+` | CUAD dataset contracts |
 | **🔍 Categories** | `41 types` | Legal clause classifications |
